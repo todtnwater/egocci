@@ -35,9 +35,9 @@ public class DBConnection {
         }
 
         // 2. MySQL DB 접속 정보 - 권한 설정 완료된 상태
-        String db_url = "jdbc:mysql://175.213.151.10:3306/egocci_music?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true";
+        String db_url = "jdbc:mysql://@@@.@@@.@@@.@@:3306/egocci_music?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true";
         String db_user = "ss";
-        String db_password = "iotiot";
+        String db_password = "@@@@@@";
 
         try {
             con = DriverManager.getConnection(db_url, db_user, db_password);
