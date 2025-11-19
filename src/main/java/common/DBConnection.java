@@ -5,12 +5,83 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.sql.DataSource;
+import org.apache.commons.dbcp2.BasicDataSource;
 
 public class DBConnection {
+    private static BasicDataSource dataSource = null;
+    
+    // 연결 풀 초기화
+    static {
+        try {
+            dataSource = new BasicDataSource();
+            dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+            // MySQL 8 최적화된 URL
+            dataSource.setUrl("jdbc:mysql://175.213.151.10:3306/egocci_music?" +
+                             "useSSL=false&serverTimezone=Asia/Seoul&" +
+                             "allowPublicKeyRetrieval=true&" +
+                             "useUnicode=true&characterEncoding=UTF-8&" +
+                             "autoReconnect=true&failOverReadOnly=false&" +
+                             "maxReconnects=3&initialTimeout=1&" +
+                             "connectTimeout=5000&socketTimeout=10000&" +
+                             "cachePrepStmts=true&useServerPrepStmts=true&" +
+                             "prepStmtCacheSize=250&prepStmtCacheSqlLimit=2048&" +
+                             "useLocalSessionState=true&elideSetAutoCommits=true&" +
+                             "rewriteBatchedStatements=true");
+            dataSource.setUsername("ss");
+            dataSource.setPassword("iotiot");
+            
+            // 연결 풀 설정
+            dataSource.setMaxTotal(8);      // 최대 8개 연결
+            dataSource.setMaxIdle(4);       // 유휴 4개
+            dataSource.setMinIdle(2);       // 최소 2개
+            dataSource.setInitialSize(2);   // 시작시 2개
+            dataSource.setMaxWaitMillis(3000); // 3초 대기
+            
+            // 연결 검증 설정
+            dataSource.setValidationQuery("SELECT 1");
+            dataSource.setTestOnBorrow(true);
+            dataSource.setTestWhileIdle(true);
+            
+            System.out.println("✓ DB 연결 풀 초기화 완료");
+            
+        } catch (Exception e) {
+            System.err.println("✗ DB 연결 풀 초기화 실패: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 
-    public static void closeDB(Connection con,
-                               PreparedStatement ps,
-                               ResultSet rs) {
+    // 연결 풀에서 연결 가져오기
+    public static Connection getConnection() {
+        try {
+            if (dataSource != null) {
+                Connection conn = dataSource.getConnection();
+                System.out.println("연결 풀에서 연결 획득 - 활성: " + dataSource.getNumActive() + 
+                                 ", 유휴: " + dataSource.getNumIdle());
+                return conn;
+            }
+        } catch (SQLException e) {
+            System.err.println("연결 풀에서 연결 실패: " + e.getMessage());
+        }
+        
+        // 연결 풀 실패시 기본 연결 시도
+        return getDirectConnection();
+    }
+    
+    // 직접 연결 (연결 풀 실패시 백업용)
+    private static Connection getDirectConnection() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            String url = "jdbc:mysql://175.213.151.10:3306/egocci_music?" +
+                        "useSSL=false&serverTimezone=Asia/Seoul";
+            return DriverManager.getConnection(url, "ss", "iotiot");
+        } catch (Exception e) {
+            System.err.println("직접 연결 실패: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public static void closeDB(Connection con, PreparedStatement ps, ResultSet rs) {
         if (rs != null) {
             try { rs.close(); } catch (SQLException e) { e.printStackTrace(); }
         }
@@ -18,69 +89,19 @@ public class DBConnection {
             try { ps.close(); } catch (SQLException e) { e.printStackTrace(); }
         }
         if (con != null) {
-            try { con.close(); } catch (SQLException e) { e.printStackTrace(); }
+            try { 
+                con.close(); // 연결 풀로 반환
+            } catch (SQLException e) { e.printStackTrace(); }
         }
-    }
-
-    public static Connection getConnection() {
-        Connection con = null;
-
-        // 1. MySQL 드라이버 로딩
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            System.out.println("MySQL 드라이버 없음!");
-            return null;
-        }
-
-        // 2. MySQL DB 접속 정보 - 권한 설정 완료된 상태
-        String db_url = "jdbc:mysql://@@@.@@@.@@@.@@:3306/egocci_music?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true";
-        String db_user = "ss";
-        String db_password = "@@@@@@";
-
-        try {
-            con = DriverManager.getConnection(db_url, db_user, db_password);
-            System.out.println("MySQL 연결 성공! - egocci_music DB");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("MySQL 계정 설정 오류!");
-            System.out.println("오류 상세: " + e.getMessage());
-        }
-
-        return con;
     }
     
-    // 테스트 메서드 - 개발용
-    public static void testConnectionWithQuery() {
-        Connection testCon = getConnection();
-        if (testCon != null) {
-            try {
-                // 테이블 존재 확인
-                PreparedStatement ps = testCon.prepareStatement("SHOW TABLES");
-                ResultSet rs = ps.executeQuery();
-                
-                System.out.println("=== egocci_music 데이터베이스 테이블 목록 ===");
-                while (rs.next()) {
-                    System.out.println("- " + rs.getString(1));
-                }
-                
-                // streaming_platforms 데이터 확인
-                ps = testCon.prepareStatement("SELECT COUNT(*) as cnt FROM streaming_platforms");
-                rs = ps.executeQuery();
-                if (rs.next()) {
-                    System.out.println("streaming_platforms 테이블 데이터 수: " + rs.getInt("cnt"));
-                }
-                
-                closeDB(testCon, ps, rs);
-                System.out.println("✓ 데이터베이스 연결 및 테이블 접근 성공!");
-                
-            } catch (SQLException e) {
-                e.printStackTrace();
-                System.out.println("✗ 쿼리 실행 실패");
-            }
-        } else {
-            System.out.println("✗ 데이터베이스 연결 실패");
+    // 연결 풀 상태 확인
+    public static void printPoolStatus() {
+        if (dataSource != null) {
+            System.out.println("=== DB 연결 풀 상태 ===");
+            System.out.println("활성 연결: " + dataSource.getNumActive());
+            System.out.println("유휴 연결: " + dataSource.getNumIdle());
+            System.out.println("최대 연결: " + dataSource.getMaxTotal());
         }
     }
 }

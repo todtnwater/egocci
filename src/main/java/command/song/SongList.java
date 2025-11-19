@@ -10,7 +10,12 @@ public class SongList implements CommonExecute {
     @Override
     public void execute(HttpServletRequest request) {
         SongDao dao = new SongDao();
-        
+        String songtype = request.getParameter("songtype");
+        String field = request.getParameter("field");
+        String keyword = request.getParameter("keyword");
+        if(keyword == null) {
+        	keyword = "";
+        }
         ArrayList<SongDto> albumSongs = dao.getSongsByAlbum("album");
         ArrayList<SongDto> epSongs = dao.getSongsByAlbum("ep");
         ArrayList<SongDto> singleSongs = dao.getSongsByAlbum("single");

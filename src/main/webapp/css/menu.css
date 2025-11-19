@@ -1,0 +1,461 @@
+@charset "UTF-8";
+/* 좌측 메뉴 */
+.left-menu {
+    position: fixed;
+    left: 20px;
+    top: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+/* 호버/터치 시 펼쳐진 상태 */
+.left-menu:hover,
+.left-menu.menu-open {
+    width: 250px;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    border-radius: 0;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.menu-toggle {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    transition: all 0.3s ease;
+}
+
+.menu-icon {
+    font-size: 20px;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+/* 펼쳐진 상태에서 메뉴 아이콘 위치 조정 */
+.left-menu:hover .menu-toggle,
+.left-menu.menu-open .menu-toggle {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    width: 40px;
+    height: 40px;
+}
+
+.left-menu:hover .menu-icon,
+.left-menu.menu-open .menu-icon {
+    transform: rotate(90deg);
+}
+
+.menu-content {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.3s ease 0.1s;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 70px);
+}
+
+.left-menu:hover .menu-content,
+.left-menu.menu-open .menu-content {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.menu-content ul {
+    list-style: none;
+    margin-bottom: 30px;
+}
+
+.menu-content li {
+    margin-bottom: 15px;
+}
+
+.menu-content a {
+    color: white;
+    text-decoration: none;
+    padding: 12px 15px;
+    display: block;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+}
+
+.menu-content a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+#menu-down {
+    margin-top: auto;
+    padding-bottom: 20px;
+}
+
+/* 우측 콘택트 메뉴 */
+#email-toggle {
+   display: none;
+}
+
+.right-contact-menu {
+    position: fixed;
+    right: 20px;
+    top: 20px;
+    border-radius: 30px;
+    width: 40px;
+	height: 63%;
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    z-index: 1000;
+    padding: 15px 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/*email*/
+#email-toggle:checked ~ .right-contact-menu {
+    width: 380px;
+    height: 600px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.95);
+}
+
+#email-toggle:checked ~ .right-contact-menu .contact-icons {
+    display: none;
+}
+
+#email-toggle:checked ~ .right-contact-menu .email-panel {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: all;
+}
+
+.contact-icon {
+   width: 40px;
+   height: 40px;
+   margin-top: 10px;
+   border-radius: 50%;
+   gap: 20px;
+   align-items: center;
+   justify-content: center;
+   background: rgba(255, 255, 255, 0.2);
+   cursor: pointer;
+   transition: all 0.3s ease;
+   text-decoration: none;
+   color: white;
+}
+
+.index-icon img {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	margin-left: 10px;
+    transition: all 0.3s ease;
+    opacity: 0.9;
+}
+
+.contact-icon:hover {
+   background: rgba(255, 255, 255, 0.3);
+   transform: scale(1.1);
+}
+
+.email-form {
+   display: flex;
+   flex-direction: column;
+   gap: 12px;
+}
+
+.email-form input,
+.email-form textarea {
+   padding: 10px 12px;
+   border: 1px solid #ddd;
+   border-radius: 6px;
+   font-size: 13px;
+   outline: none;
+   transition: border-color 0.2s ease;
+   font-family: inherit;
+}
+
+.email-form input:focus,
+.email-form textarea:focus {
+   border-color: #ff9312;
+}
+
+.email-form textarea {
+   resize: none;
+   height: 100px;
+}
+
+.send-btn {
+   background: linear-gradient(135deg, #ff9312, #e67e00);
+   color: white;
+   border: none;
+   padding: 10px 20px;
+   border-radius: 6px;
+   font-size: 13px;
+   font-weight: 500;
+   cursor: pointer;
+   transition: all 0.3s ease;
+}
+
+.send-btn:hover {
+   transform: translateY(-1px);
+   box-shadow: 0 4px 12px rgba(255, 147, 18, 0.3);
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+   #email-toggle:checked ~ .right-contact-menu {
+       width: calc(100vw - 40px);
+       right: 30px;
+       left: 30px;
+       border-radius: 30px;
+   }
+   
+   .right-contact-menu {
+       right: 15px;
+       top: 15px;
+       border-radius: 30px;
+   }
+}
+/*email 복사 글씨*/
+#copy-msg{
+	color: green; display: none; 
+    position: fixed; top: 10px; left: 50%; 
+    transform: translateX(-50%); 
+    background: #f0fff0; padding: 5px 10px; 
+    border: 1px solid green; border-radius: 5px;
+}
+
+/* 📱 모바일용 이메일 표시 UI 스타일 */
+.email-display-mobile {
+    text-align: center;
+    color: #333;
+    padding: 10px;
+    display: none; /* (평상시에는 숨김) */
+}
+.email-display-mobile p {
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+.email-address-box {
+    display: flex;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    overflow: hidden;
+}
+.email-address-box input {
+    flex-grow: 1;
+    border: none;
+    padding: 10px 12px;
+    font-size: 13px;
+    background-color: #f7f7f7;
+    outline: none;
+}
+.email-address-box button {
+    border: none;
+    background-color: #ff9312;
+    color: white;
+    padding: 0 15px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+/* 화면 너비가 768px 이하일 때 (모바일 환경) 적용될 스타일 */
+@media (max-width: 768px) {
+    /* 💻 데스크톱용 입력 폼을 숨김 */
+    .email-form {
+        display: none;
+    }
+    /* 📱 모바일용 이메일 표시를 보여줌 */
+    .email-display-mobile {
+        display: block;
+    }
+}
+/* 이메일 패널 */
+.email-panel {
+   opacity: 0;
+   transform: scale(0.8);
+   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+   margin-top: 20px;
+   pointer-events: none;
+}
+
+#email-toggle:checked ~ .right-contact-menu .email-panel {
+   opacity: 1;
+   transform: scale(1);
+   pointer-events: all;
+}
+
+.panel-header {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   color: #333;
+   position: relative; 
+   margin-bottom: 20px;
+}
+
+.panel-header h3 {
+   margin: 0 0 15px 0; 
+   font-size: 18px;
+   font-weight: 600;
+}
+
+.panel-profile-pic {
+   width: 150px;
+   height: 150px;
+   border-radius: 50%;
+}
+
+.close-btn {
+   background: none;
+   border: none;
+   font-size: 20px;
+   cursor: pointer;
+   color: #666;
+   padding: 0;
+   width: 25px;
+   height: 25px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   border-radius: 50%;
+   transition: all 0.2s ease;
+}
+
+.close-btn:hover {
+   background: rgba(0, 0, 0, 0.1);
+}
+
+.email-form {
+   display: flex;
+   flex-direction: column;
+   gap: 12px;
+}
+
+.email-form input,
+.email-form textarea {
+   padding: 10px 12px;
+   border: 1px solid #ddd;
+   border-radius: 6px;
+   font-size: 13px;
+   outline: none;
+   transition: border-color 0.2s ease;
+   font-family: inherit;
+}
+
+.email-form input:focus,
+.email-form textarea:focus {
+   border-color: #ff9312;
+}
+
+.email-form textarea {
+   resize: none;
+   height: 80px;
+}
+
+.send-btn {
+   background: linear-gradient(135deg, #ff9312, #e67e00);
+   color: white;
+   border: none;
+   padding: 10px 20px;
+   border-radius: 6px;
+   font-size: 13px;
+   font-weight: 500;
+   cursor: pointer;
+   transition: all 0.3s ease;
+}
+
+.send-btn:hover {
+   transform: translateY(-1px);
+   box-shadow: 0 4px 12px rgba(255, 147, 18, 0.3);
+}
+
+/* 모바일 메뉴 대응 */
+@media (hover: none) and (pointer: coarse) {
+    .left-menu.menu-open {
+        width: 280px;
+        height: 100vh;
+        left: 0;
+        top: 0;
+        border-radius: 0;
+    }
+    
+    .left-menu.menu-open .menu-content {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .left-menu {
+        width: 45px;
+        height: 45px;
+        left: 15px;
+        top: 15px;
+    }
+    
+    .menu-toggle {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .menu-icon {
+        font-size: 18px;
+    }
+    
+    .left-menu:hover,
+    .left-menu.menu-open {
+        width: 100vw;
+        height: 100vh;
+    }
+    
+    /* 우측 메뉴 모바일 */
+    #email-toggle:checked ~ .right-contact-menu {
+        width: calc(100vw - 40px);
+        right: 30px;
+        left: 30px;
+        border-radius: 30px;
+    }
+    
+    .right-contact-menu {
+        right: 15px;
+        top: 15px;
+        border-radius: 30px;
+    }
+}
+
+/* 메뉴가 열렸을 때 배경 오버레이 */
+@media (max-width: 768px) {
+    .menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .menu-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+}

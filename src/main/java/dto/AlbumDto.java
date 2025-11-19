@@ -1,30 +1,23 @@
 package dto;
 
 public class AlbumDto {
-    // 기본 앨범 정보
-    private String album_id;
+    private int album_id;
     private String album_title;
     private String album_type;
     private String album_number;
     private String release_date;
     private String album_cover_image;
     private String album_description;
-    
-    // 앨범 속성
     private int total_tracks;
     private int display_order;
     private boolean is_active;
-    
-    // 시스템 정보
     private String created_at;
     private String updated_at;
     
-    // 생성자
     public AlbumDto() {}
     
-    // 기본 앨범 정보 Getter/Setter
-    public String getAlbum_id() { return album_id; }
-    public void setAlbum_id(String album_id) { this.album_id = album_id; }
+    public int getAlbum_id() { return album_id; }
+    public void setAlbum_id(int album_id) { this.album_id = album_id; }
     
     public String getAlbum_title() { return album_title; }
     public void setAlbum_title(String album_title) { this.album_title = album_title; }
@@ -44,7 +37,6 @@ public class AlbumDto {
     public String getAlbum_description() { return album_description; }
     public void setAlbum_description(String album_description) { this.album_description = album_description; }
     
-    // 앨범 속성 Getter/Setter
     public int getTotal_tracks() { return total_tracks; }
     public void setTotal_tracks(int total_tracks) { this.total_tracks = total_tracks; }
     
@@ -54,7 +46,6 @@ public class AlbumDto {
     public boolean getIs_active() { return is_active; }
     public void setIs_active(boolean is_active) { this.is_active = is_active; }
     
-    // 시스템 정보 Getter/Setter
     public String getCreated_at() { return created_at; }
     public void setCreated_at(String created_at) { this.created_at = created_at; }
     

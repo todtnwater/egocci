@@ -2,16 +2,17 @@ package dto;
 
 public class SongDto {
     // 기본 곡 정보
-    private String song_id;
-    private String album_id;
+    private int song_id;
+    private int album_id;
     private String song_title;
     private String artist_name;
     private String genre;
     private String lyrics;
     private String song_cover_image;
     private int track_number;
-    private String duration;
+    private String duration;  // TIME 타입은 String으로 받아서 처리
     private boolean is_title_track;
+    private int display_order;
     
     // 앨범 관련 정보
     private String album_title;
@@ -26,30 +27,14 @@ public class SongDto {
     private String created_at;
     private String updated_at;
     
-    // 생성자
     public SongDto() {}
     
-    public SongDto(String song_id, String song_title, String artist_name, String album_title) {
-        this.song_id = song_id;
-        this.song_title = song_title;
-        this.artist_name = artist_name;
-        this.album_title = album_title;
-    }
+    // Getter/Setter
+    public int getSong_id() { return song_id; }
+    public void setSong_id(int song_id) { this.song_id = song_id; }
     
-    public SongDto(String song_id, String song_title, String artist_name, String genre, String lyrics) {
-        this.song_id = song_id;
-        this.song_title = song_title;
-        this.artist_name = artist_name;
-        this.genre = genre;
-        this.lyrics = lyrics;
-    }
-    
-    // 기본 곡 정보 Getter/Setter
-    public String getSong_id() { return song_id; }
-    public void setSong_id(String song_id) { this.song_id = song_id; }
-    
-    public String getAlbum_id() { return album_id; }
-    public void setAlbum_id(String album_id) { this.album_id = album_id; }
+    public int getAlbum_id() { return album_id; }
+    public void setAlbum_id(int album_id) { this.album_id = album_id; }
     
     public String getSong_title() { return song_title; }
     public void setSong_title(String song_title) { this.song_title = song_title; }
@@ -75,7 +60,9 @@ public class SongDto {
     public boolean getIs_title_track() { return is_title_track; }
     public void setIs_title_track(boolean is_title_track) { this.is_title_track = is_title_track; }
     
-    // 앨범 관련 정보 Getter/Setter
+    public int getDisplay_order() { return display_order; }
+    public void setDisplay_order(int display_order) { this.display_order = display_order; }
+    
     public String getAlbum_title() { return album_title; }
     public void setAlbum_title(String album_title) { this.album_title = album_title; }
     
@@ -97,7 +84,6 @@ public class SongDto {
     public int getTotal_tracks() { return total_tracks; }
     public void setTotal_tracks(int total_tracks) { this.total_tracks = total_tracks; }
     
-    // 시스템 정보 Getter/Setter
     public String getCreated_at() { return created_at; }
     public void setCreated_at(String created_at) { this.created_at = created_at; }
     
