@@ -1,0 +1,512 @@
+@charset "UTF-8";
+/* 곡 상세보기 컨테이너 크기 제한 */
+.song-view-container {
+    max-width: 80%;
+    margin: 0 auto;
+}
+/* 곡 등록/수정 폼 컨테이너 크기 제한 */
+.song-form-container {
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+/* 네비게이션 버튼 */
+.navigation-buttons {
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+/* 네비게이션 버튼 */
+.navigation-buttons {
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.btn-cancel {
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-cancel:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.btn-warning {
+    padding: 8px 16px;
+    background: #ffa500;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-warning:hover {
+    background: #ff8c00;
+    transform: translateY(-2px);
+}
+
+.btn-danger {
+    padding: 8px 16px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-danger:hover {
+    background: #c82333;
+    transform: translateY(-2px);
+}
+
+/* 곡 상세 컨테이너 */
+.song-detail-container {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 30px;
+    margin-top: 20px;
+}
+
+/* 헤더 */
+.song-detail-header {
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.song-detail-header h1 {
+    color: white;
+    font-size: 2em;
+    margin: 0;
+}
+
+/* 타이틀 뱃지 */
+.title-track-badge {
+    display: inline-block;
+    padding: 5px 15px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 20px;
+    font-size: 0.5em;
+    font-weight: 500;
+}
+
+/* 메인 콘텐츠 */
+.song-detail-content {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+/* 이미지 영역 */
+.song-detail-image {
+    flex: 0 0 400px;
+}
+
+.song-detail-image img {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* 정보 영역 */
+.song-detail-info {
+    flex: 1;
+}
+
+.info-section {
+    margin-bottom: 30px;
+}
+
+.info-section h3 {
+    color: white;
+    font-size: 1.3em;
+    margin-bottom: 15px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 10px;
+}
+
+.info-section table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.info-section table tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.info-section table th {
+    padding: 12px;
+    text-align: left;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
+    width: 120px;
+}
+
+.info-section table td {
+    padding: 12px;
+    text-align: left;
+    color: white;
+}
+
+/* 스트리밍 링크 */
+.streaming-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.streaming-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+    transition: all 0.3s;
+}
+
+.streaming-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    text-decoration: none;
+}
+
+/* 가사 섹션 */
+.lyrics-section {
+    margin-top: 40px;
+}
+
+.lyrics-section h3 {
+    color: white;
+    font-size: 1.3em;
+    margin-bottom: 15px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 10px;
+}
+
+.lyrics-section > div {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.lyrics-section pre {
+    color: white;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 1em;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    margin: 0;
+}
+
+.lyrics-section p {
+    color: white;
+    text-align: center;
+    margin: 0;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .song-detail-container {
+        padding: 20px;
+    }
+    
+    .song-detail-content {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .song-detail-image {
+        flex: none;
+        width: 100%;
+    }
+    
+    .song-detail-header h1 {
+        font-size: 1.5em;
+    }
+    
+    .title-track-badge {
+        font-size: 0.6em;
+    }
+    
+    .info-section table th {
+        width: 100px;
+        font-size: 0.9em;
+    }
+    
+    .info-section table td {
+        font-size: 0.9em;
+    }
+    .song-view-container,
+    .song-form-container {
+        max-width: 95%;
+    }
+    .song-detail-container {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .song-detail-container {
+        padding: 15px;
+    }
+    
+    .song-detail-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .song-detail-header h1 {
+        font-size: 1.3em;
+    }
+    
+    .navigation-buttons form {
+        display: block;
+        margin-bottom: 10px;
+    }
+    
+    .btn-cancel,
+    .btn-warning,
+    .btn-danger {
+        width: 100%;
+    }
+}
+/* 스트리밍 링크 */
+.streaming-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.streaming-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: white;
+    padding: 0;
+}
+
+.streaming-link:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+    text-decoration: none;
+}
+
+.streaming-link img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+}
+
+/* === 폼 스타일 (write/update용) === */
+
+.content-form {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 30px;
+    margin-top: 20px;
+}
+
+.form-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+}
+
+.form-section h3 {
+    color: white;
+    font-size: 1.3em;
+    margin-bottom: 20px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 10px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    color: white;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="url"],
+.form-group input[type="date"],
+.form-group input[type="number"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    color: white;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.form-group textarea {
+    resize: vertical;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.radio-group {
+    display: flex;
+    gap: 20px;
+}
+
+.radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+}
+
+.album-info-display {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+    color: white;
+}
+
+.album-info-display p {
+    margin: 10px 0;
+}
+
+.album-info-display small {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.form-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.form-groupd select {
+    width: 100%;
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    color: white;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s;
+}
+
+.form-group select option {
+    background: #333;
+    color: white;
+}
+
+
+.btn-submit {
+    padding: 12px 30px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+/* === 관리자 페이지 스타일 (write/update) === */
+.song-form-container .content-title,
+.song-form-container .content-form {
+    background: white;
+    color: #333;
+}
+
+.song-form-container .content-form {
+    background: white;
+    color: #333;
+}
+
+.song-form-container .form-section {
+    background: #f5f5f5;
+}
+
+.song-form-container .form-section h3 {
+    color: #333;
+    border-bottom: 2px solid #ddd;
+}
+
+.song-form-container .form-group label {
+    color: #333;
+}
+
+.song-form-container .form-group input[type="text"],
+.song-form-container .form-group input[type="url"],
+.song-form-container .form-group input[type="date"],
+.song-form-container .form-group input[type="number"],
+.song-form-container .form-group select,
+.song-form-container .form-group textarea {
+    background: white;
+    border: 1px solid #ddd;
+    color: #333;
+}
+
+.song-form-container .form-group input:focus,
+.song-form-container .form-group select:focus,
+.song-form-container .form-group textarea:focus {
+    background: white;
+    border-color: #667eea;
+}
+
+.song-form-container .form-group select option {
+    background: white;
+    color: #333;
+}
+
+.song-form-container .album-info-display {
+    background: #f0f0f0;
+    color: #333;
+}
+
+.song-form-container .album-info-display small {
+    color: #666;
+}
+
+.song-form-container .radio-group label {
+    color: #333;
+}
