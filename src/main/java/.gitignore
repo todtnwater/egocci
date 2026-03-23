@@ -1,3 +1,9 @@
 /build/
 target/
 *.class
+
+.settings/
+.project
+.classpath
+
+*.jar
