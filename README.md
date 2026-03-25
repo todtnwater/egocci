@@ -42,7 +42,7 @@
 --  videos
 뮤직비디오やライブ映像など、動画コンテンツを管理するテーブルです。
 
-### 🖼 gallery
+-- gallery
 アーティスト写真や活動画像を管理するテーブルです。
 
 --  scheduled_performances
