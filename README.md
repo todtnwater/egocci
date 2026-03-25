@@ -4,12 +4,17 @@
 
 ## 使用技術
 - MySQL / JSP / Servlet / Java
+- JavaMail API（Gmail SMTP）／ JSch（SFTP）／ SHA-256（パスワード暗号化）
+- Apache Commons DBCP2（コネクションプール）／ Servlet Multipart API（ファイルアップロード）
 
 ---
 
 本プロジェクトは、歌手「コ・ギョンビン（고경빈）」の公式ウェブサイトを想定して設計したデータベースです。  
 アルバム、楽曲、動画、ギャラリー、公演情報、SNSリンク、お問い合わせ機能など、  
 アーティスト活動に必要なコンテンツを統合的に管理できるように構成しました。
+
+リポジトリ：https://github.com/todtnwater/kokyoungbin
+サイトリンク : https://egocci.co.kr/egocci/Index
 
 ---
 
