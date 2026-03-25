@@ -13,8 +13,8 @@
 アルバム、楽曲、動画、ギャラリー、公演情報、SNSリンク、お問い合わせ機能など、  
 アーティスト活動に必要なコンテンツを統合的に管理できるように構成しました。
 
-リポジトリ：https://github.com/todtnwater/kokyoungbin
-サイトリンク : https://egocci.co.kr/egocci/Index
+- リポジトリ：https://github.com/todtnwater/kokyoungbin
+- サイトリンク : https://egocci.co.kr/egocci/Index
 
 ---
 
