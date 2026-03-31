@@ -1,0 +1,160 @@
+/* =====================
+   갤러리 그리드
+===================== */
+.gallery-admin-wrap {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 300px));
+    gap: 16px;
+    padding: 10px 0;
+    justify-content: center;
+}
+
+/* =====================
+   갤러리 아이템
+===================== */
+.gallery-item {
+    border-radius: 10px;
+    overflow: hidden;
+    background: rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.gallery-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+
+/* =====================
+   썸네일 + 오버레이
+===================== */
+.gallery-thumb {
+    position: relative;
+    width: 100%;
+    padding-bottom: 75%; /* 4:3 비율 */
+    overflow: hidden;
+    cursor: pointer;
+    background: #111;
+}
+
+.gallery-thumb img {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.gallery-thumb:hover img {
+    opacity: 0.5;
+    transform: scale(1.05);
+}
+
+.gallery-overlay {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+}
+
+.gallery-thumb:hover .gallery-overlay {
+    opacity: 1;
+}
+
+.gallery-overlay .material-icons {
+    font-size: 48px;
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+}
+
+/* =====================
+   아이템 정보
+===================== */
+.gallery-item-info {
+    padding: 10px 14px 14px;
+}
+
+.gallery-item-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.gallery-admin-btns {
+    display: flex;
+    gap: 8px;
+}
+
+/* =====================
+   뷰 페이지
+===================== */
+.gallery-view-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+.gallery-view-img-wrap {
+    width: 100%;
+    text-align: center;
+    background: rgba(0,0,0,0.3);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.gallery-view-img {
+    max-width: 100%;
+    max-height: 600px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+
+.gallery-view-info {
+    width: 100%;
+    text-align: center;
+}
+
+.gallery-view-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 8px;
+}
+
+.gallery-view-date {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    margin: 0 0 12px;
+}
+
+.gallery-view-desc {
+    font-size: 14px;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.6;
+}
+
+/* =====================
+   빈 콘텐츠
+===================== */
+.no-content {
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 60px 0;
+    font-size: 14px;
+}

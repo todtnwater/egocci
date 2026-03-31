@@ -78,9 +78,7 @@ body {
 /* Footer 스타일 */
 .footer {
     clear: both;
-    background: linear-gradient(to bottom, #EEF7FF, #4D869C);
-    background-size: 100% 70px; 
-    background-repeat: no-repeat;
+     background: linear-gradient(to bottom, #ff9312 0%, #2d3a45 25%);
     padding: 80px 20px 65px;
     margin-top: auto;
     width: 100%;

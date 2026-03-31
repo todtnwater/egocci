@@ -143,6 +143,14 @@
     border-radius: 8px;
 }
 
+.content-mid3 .music-card {
+    min-width: 230px;
+}
+
+.content-mid3 .card-image {
+    height: 230px;
+}
+
 .sc-img {
     width: 100%;
     height: auto;

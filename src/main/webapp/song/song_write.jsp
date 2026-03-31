@@ -32,9 +32,28 @@ function previewImage(event) {
 function loadAlbums() {
     const albumType = document.getElementById('album_type').value;
     const choiceGroup = document.getElementById('album_choice_group');
-    
-    if (albumType) {
-        choiceGroup.style.display = 'block';
+    const existingRadioWrap = document.getElementById('existing_album_wrap');
+    const existingRadio = document.getElementById('existing_album');
+    const newRadio = document.getElementById('new_album');
+
+    resetAlbumForm();
+
+    if (!albumType) {
+        choiceGroup.style.display = 'none';
+        return;
+    }
+
+    choiceGroup.style.display = 'block';
+
+    if (albumType === 'single') {
+        // 싱글: 기존 앨범 선택 라디오 숨기고, 신규 앨범 자동 선택
+        existingRadioWrap.style.display = 'none';
+        existingRadio.checked = false;
+        newRadio.checked = true;
+        toggleAlbumForm();
+    } else {
+        // 앨범/EP: 기존 앨범 선택 라디오 보이기
+        existingRadioWrap.style.display = '';
         fetch('Song?t_gubun=getAlbumList&type=' + albumType)
             .then(response => response.json())
             .then(data => {
@@ -51,9 +70,6 @@ function loadAlbums() {
                 console.error('앨범 목록 로드 실패:', error);
                 alert('앨범 목록을 불러오는데 실패했습니다.');
             });
-    } else {
-        choiceGroup.style.display = 'none';
-        resetAlbumForm();
     }
 }
 
@@ -136,14 +152,11 @@ function validateForm() {
 function submitSongForm() {
     if (!validateForm()) return;
     
-    document.writeForm.method = "post";
-    document.writeForm.action = "Song";
-    document.writeForm.enctype = "multipart/form-data";
     document.writeForm.submit();
 }
 </script>
 
-<form name="writeForm" method="post" action="Song">
+<form name="writeForm" method="post" action="Song" enctype="multipart/form-data">
     <input type="hidden" name="t_gubun" value="save">
     
     <div class="content-row">
@@ -168,7 +181,8 @@ function submitSongForm() {
                 <div class="form-group" id="album_choice_group" style="display:none;">
                     <label>앨범 선택 <span style="color:red;">*</span></label>
                     <div class="radio-group">
-                        <label>
+                        <%-- 싱글 선택 시 JS로 display:none 처리됨 --%>
+                        <label id="existing_album_wrap">
                             <input type="radio" name="album_choice" id="existing_album" value="existing" onchange="toggleAlbumForm()">
                             기존 앨범에 추가
                         </label>
@@ -254,10 +268,19 @@ function submitSongForm() {
                             타이틀곡
                         </label>
                     </div>
-                    <div class="form-group">
-                        <label for="lyrics">가사</label>
-                        <textarea name="t_lyrics" id="lyrics" rows="15" placeholder="가사를 입력하세요"></textarea>
-                    </div>
+					
+					<div class="form-group">
+					    <label for="behind_note">비하인드 (선택)</label>
+					    <textarea name="t_behind_note" id="behind_note" rows="10"
+					        placeholder="이 곡에 대한 이야기, 제작 비하인드를 자유롭게 적어주세요"></textarea>
+					</div>
+					
+					<div class="form-group">
+					    <label for="lyrics">가사</label>
+					    <textarea name="t_lyrics" id="lyrics" rows="15"
+					        placeholder="가사를 입력하세요"></textarea>
+					</div>
+                    
                 </div>
 
                 <!-- 스트리밍 링크 -->

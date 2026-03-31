@@ -3,6 +3,9 @@
 <%@ page import="dto.SocialDto" %>
 <%
     ArrayList<SocialDto> socialLinks = (ArrayList<SocialDto>)request.getAttribute("socialLinks");
+    String sessionId = (String)session.getAttribute("sessionId");
+    String userName = (String)session.getAttribute("userName");
+    String sessionLevel = (String)session.getAttribute("sessionLevel");
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -19,6 +22,9 @@
 	<link rel="stylesheet" href="css/song.css">
 	<link rel="stylesheet" href="css/login.css">
 	<link rel="stylesheet" href="css/view.css">
+	<link rel="stylesheet" href="css/video.css">
+	<link rel="stylesheet" href="css/gallery.css?v=2">
+	<link rel="stylesheet" href="css/mail.css">
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="js/script.js"></script>
 </head>
@@ -61,25 +67,34 @@
             for(SocialDto social : socialLinks) {
         %>
         <a href="<%=social.getPlatform_url()%>" class="contact-icon" title="<%=social.getPlatform_name()%>" target="_blank">
-            <img src="images/<%=social.getPlatform_icon()%>" alt="<%=social.getPlatform_name()%>">
+            <img src="<%=request.getContextPath()%>/image/song/<%=social.getPlatform_icon()%>" alt="<%=social.getPlatform_name()%>" onerror="retryImage(this, '🎵')">
         </a>
         <%
             }
         } else {
         %>
         <!-- 기본 소셜 링크들 (DB 연결 실패시) -->
-        <a href="https://www.instagram.com/egoccl/" class="contact-icon" title="Instagram" target="_blank">
-            <img src="images/Instagram.png">
+         <a href="https://www.instagram.com/egoccl/" class="contact-icon" title="Instagram" target="_blank">
+            <img src="<%=request.getContextPath()%>/image/song/Instagram.png" alt="Instagram" onerror="retryImage(this, '📷')">
         </a>
         <a href="https://www.youtube.com/@egoccl/videos" class="contact-icon" title="YouTube" target="_blank">
-            <img src="images/Youtube.png">
+            <img src="<%=request.getContextPath()%>/image/song/Youtube.png" alt="YouTube" onerror="retryImage(this, '📺')">
         </a>
         <a href="https://soundcloud.com/egoccl" class="contact-icon" title="SoundCloud" target="_blank">
-            <img src="images/Soundcloud.png">
+            <img src="<%=request.getContextPath()%>/image/song/Soundcloud.png" alt="SoundCloud" onerror="retryImage(this, '🎵')">
         </a>
         <a href="https://open.spotify.com/artist/0Tu6vmfKlkQB9kCyYNt79I" class="contact-icon" title="Spotify" target="_blank">
-            <img src="images/Spotify.png">
+            <img src="<%=request.getContextPath()%>/image/song/Spotify.png" alt="Spotify" onerror="retryImage(this, '🎶')">
         </a>
+        <a href="https://music.apple.com/kr/artist/고경빈/1461067097" class="contact-icon" title="Apple Music" target="_blank">
+            <img src="<%=request.getContextPath()%>/image/song/Applemusic.png" alt="Apple Music" onerror="retryImage(this, '🍎')">
+        </a>
+        <a href="https://www.melon.com/artist/timeline.htm?artistId=2857454" class="contact-icon" title="Melon" target="_blank">
+            <img src="<%=request.getContextPath()%>/image/song/Melon.png" alt="Melon" onerror="retryImage(this, '🍈')">
+        </a>
+        <a href="https://github.com/todtnwater/egocci" class="contact-icon" title="github" target="_blank">
+            <img src="<%=request.getContextPath()%>/image/song/githubimage.png" alt="Github" onerror="retryImage(this, 'git')">
+         </a>
         <%}%>
     </div>
     
@@ -88,20 +103,29 @@
         <div class="panel-header">
         	<label for="email-toggle" class="close-btn">×</label>
 		    <h3>Send Email</h3>
-		    <img src="images/email_pic.jpg" class="panel-profile-pic">
+		    <img src="<%=request.getContextPath()%>/image/song/email_pic.jpg" class="panel-profile-pic">
 		</div>
         <div class="email-address-box">
             <p id="copy-msg">복사완료!</p>
 
 <input type="button" onclick="copyEmail()" value="korangemgmt@gmail.com" id="email-address" readonly>
         </div>
-        <form class="email-form" id="emailForm">
-            <input type="text" name="name" placeholder="Your Name" required>
-            <input type="email" name="email" placeholder="Your Email" required>
-            <input type="text" name="subject" placeholder="Subject" required>
-            <textarea name="message" placeholder="Your Message" required></textarea>
-            <button type="submit" class="send-btn">Send Message</button>
-        </form>
+        <% if(sessionId != null && userName != null) { %>
+		<form class="email-form" id="emailForm" method="post" action="<%=request.getContextPath()%>/Mail">
+		    <input type="hidden" name="t_gubun" value="send">
+		
+		    <input type="text" name="t_sender_name" value="<%=userName%>" placeholder="Your Name" readonly>
+		    <input type="email" name="t_sender_email" value="<%=sessionId%>" placeholder="Your Email" readonly>
+		    <input type="text" name="t_subject" placeholder="Subject" required>
+		    <textarea name="t_content" placeholder="Your Message" required></textarea>
+		    <button type="submit" class="send-btn">Send Message</button>
+		</form>
+		<% } else { %>
+		<div class="email-form login-guide-box">
+		    <input type="text" value="로그인 후 메일 전송이 가능합니다." readonly>
+		    <button type="button" class="send-btn" onclick="goPage('login')">Login</button>
+		</div>
+		<% } %>
         <!-- 모바일 -->
         <div class="email-display-mobile">
    		</div>
@@ -118,27 +142,27 @@
             <ul>
                 <li><a href="Song">Song</a></li>
                 <li><a href="Scheduled">Scheduled Performance</a></li>
-                <li><a href="Stage">Live Stage</a></li>
                 <li><a href="Gallery">Gallery</a></li>
                 <li><a href="Video">Video</a></li>
                 <li><a href="Projects">Projects</a></li>
             </ul>
              <ul id="menu-down">
-			    <li><a href="egocci">egocci</a></li>
+			    <li><a>egocci</a></li>
 			    <li><a></a></li>
 			    <%
-			    String userName = (String)session.getAttribute("userName");
-			    if(userName != null) {
-			        // 로그인 상태
-			    %>
-			    <li><a href="javascript:void(0)">👤 <%=userName%>님</a></li>
-			    <li><a href="javascript:goPage('logout')">Logout</a></li>
-			    <%
-			    } else {
-			        // 로그아웃 상태
-			    %>
-			    <li><a href="javascript:goPage('login')">Login</a></li>
-			    <%}%>
+				if(userName != null) {
+				%>
+				<li><a href="javascript:void(0)">👤 <%=userName%>님</a></li>
+				<% if("top".equals(sessionLevel)) { %>
+				<li><a href="javascript:goPageManager('list')">회원 관리</a></li>
+				<li><a href="<%=request.getContextPath()%>/Mail?t_gubun=adminList">메일 관리</a></li>
+				<% } %>
+				<li><a href="javascript:goPage('logout')">Logout</a></li>
+				<%
+				} else {
+				%>
+				<li><a href="javascript:goPage('login')">Login</a></li>
+				<% } %>
 			</ul>
         </div>
     </nav>

@@ -37,11 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('click', closeLeftMenu);
     document.addEventListener('touchstart', closeLeftMenu);
 
-    // 이메일 폼 초기화
-    const emailForm = document.getElementById('emailForm');
-    if (emailForm) {
-        emailForm.addEventListener('submit', handleEmailSubmit);
-    }
+    
 
     // 모든 슬라이더 초기화
     initAllSliders();
@@ -235,29 +231,16 @@ function showCopyMessage() {
     }
 }
 
-function handleEmailSubmit(e) {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    
-    fetch('send_email.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data && data.status === 'success') {
-            alert('메일이 성공적으로 전송되었습니다!');
-            const emailToggle = document.getElementById('email-toggle');
-            if (emailToggle) {
-                emailToggle.checked = false;
-            }
-            e.target.reset();
-        } else {
-            alert('메일 전송 중 오류가 발생했습니다.');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('메일 전송 기능이 현재 사용할 수 없습니다.');
-    });
+function retryImage(img, fallbackEmoji) {
+    var retryCount = parseInt(img.getAttribute('data-retry') || '0');
+    if (retryCount < 3) {
+        img.setAttribute('data-retry', retryCount + 1);
+        setTimeout(function() {
+            var originalSrc = img.getAttribute('data-src') || img.src;
+            img.setAttribute('data-src', originalSrc);
+            img.src = originalSrc + '?retry=' + retryCount;
+        }, 1500 * (retryCount + 1)); // 1.5초, 3초, 4.5초 간격으로 재시도
+    } else {
+        img.outerHTML = '<span style="font-size:20px;">' + fallbackEmoji + '</span>';
+    }
 }

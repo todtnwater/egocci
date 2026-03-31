@@ -5,19 +5,19 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.sql.DataSource;
-import org.apache.commons.dbcp2.BasicDataSource;
+
+import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 
 public class DBConnection {
     private static BasicDataSource dataSource = null;
-    
+
     // 연결 풀 초기화
     static {
         try {
             dataSource = new BasicDataSource();
             dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
             // MySQL 8 최적화된 URL
-            dataSource.setUrl("jdbc:mysql://175.213.151.10:3306/egocci_music?" +
+            dataSource.setUrl("jdbc:mysql://221.145.43.81:3306/egocci_music?" +
                              "useSSL=false&serverTimezone=Asia/Seoul&" +
                              "allowPublicKeyRetrieval=true&" +
                              "useUnicode=true&characterEncoding=UTF-8&" +
@@ -30,21 +30,21 @@ public class DBConnection {
                              "rewriteBatchedStatements=true");
             dataSource.setUsername("ss");
             dataSource.setPassword("iotiot");
-            
+
             // 연결 풀 설정
             dataSource.setMaxTotal(8);      // 최대 8개 연결
             dataSource.setMaxIdle(4);       // 유휴 4개
             dataSource.setMinIdle(2);       // 최소 2개
             dataSource.setInitialSize(2);   // 시작시 2개
             dataSource.setMaxWaitMillis(3000); // 3초 대기
-            
+
             // 연결 검증 설정
             dataSource.setValidationQuery("SELECT 1");
             dataSource.setTestOnBorrow(true);
             dataSource.setTestWhileIdle(true);
-            
+
             System.out.println("✓ DB 연결 풀 초기화 완료");
-            
+
         } catch (Exception e) {
             System.err.println("✗ DB 연결 풀 초기화 실패: " + e.getMessage());
             e.printStackTrace();
@@ -56,23 +56,21 @@ public class DBConnection {
         try {
             if (dataSource != null) {
                 Connection conn = dataSource.getConnection();
-                System.out.println("연결 풀에서 연결 획득 - 활성: " + dataSource.getNumActive() + 
-                                 ", 유휴: " + dataSource.getNumIdle());
                 return conn;
             }
         } catch (SQLException e) {
             System.err.println("연결 풀에서 연결 실패: " + e.getMessage());
         }
-        
+
         // 연결 풀 실패시 기본 연결 시도
         return getDirectConnection();
     }
-    
+
     // 직접 연결 (연결 풀 실패시 백업용)
     private static Connection getDirectConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String url = "jdbc:mysql://175.213.151.10:3306/egocci_music?" +
+            String url = "jdbc:mysql://221.145.43.81:3306/egocci_music?" +
                         "useSSL=false&serverTimezone=Asia/Seoul";
             return DriverManager.getConnection(url, "ss", "iotiot");
         } catch (Exception e) {
@@ -89,12 +87,12 @@ public class DBConnection {
             try { ps.close(); } catch (SQLException e) { e.printStackTrace(); }
         }
         if (con != null) {
-            try { 
+            try {
                 con.close(); // 연결 풀로 반환
             } catch (SQLException e) { e.printStackTrace(); }
         }
     }
-    
+
     // 연결 풀 상태 확인
     public static void printPoolStatus() {
         if (dataSource != null) {

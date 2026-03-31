@@ -48,28 +48,32 @@ function goWrite(){
             </div>
         </form>
 
+        <!-- 항상 존재하는 네비게이션 폼 (뷰 이동용) -->
+        <form name="song">
+            <input type="hidden" name="t_gubun">
+            <input type="hidden" name="t_no">
+        </form>
+
         <!-- 관리자 메뉴 -->
         <div class="content-title2">
 		<%
 		String level = (String)session.getAttribute("sessionLevel");
 		if("top".equals(level)) {
 		%>
-		    <form name="song">
-		        <input type="hidden" name="t_gubun">
-		        <input type="hidden" name="t_no">
 		        <div class="admin-menu">
 		            <a href="javascript:goWrite()" class="btn-submit">곡 등록</a>
 		        </div>
-		    </form>
 		<%}%>
 		</div>
 
-        <!-- 앨범 섹션 -->
+        <!-- 앨범 섹션: 데이터 있을 때만 표시 -->
+        <%
+        if(albumSongs != null && !albumSongs.isEmpty()) {
+        %>
         <div class="content-title">
             <h2>앨범</h2>
         </div>
         <%
-        if(albumSongs != null && !albumSongs.isEmpty()) {
             String currentAlbum = "";
             for(SongDto dto : albumSongs) {
                 if(!currentAlbum.equals(dto.getAlbum_title())) {
@@ -106,14 +110,14 @@ function goWrite(){
                 }
                 String imagePath = "";
                 if(dto.getSong_cover_image() != null && !dto.getSong_cover_image().trim().isEmpty()) {
-                    imagePath = request.getContextPath() + "/images/song/" + dto.getSong_cover_image();
+                    imagePath = request.getContextPath() + "/image/song/" + dto.getSong_cover_image();
                 } else {
-                    imagePath = request.getContextPath() + "/images/default-song.jpg";
+                    imagePath = request.getContextPath() + "/image/song/default-song.jpg";
                 }
         %>
                             <a href="javascript:goSongView(<%=dto.getSong_id()%>)" class="music-card">
                                 <div class="card-image">
-                                    <img src="<%=imagePath%>" alt="<%=dto.getSong_title()%>" onerror="this.src='<%=request.getContextPath()%>/images/default-song.jpg'">
+                                    <img src="<%=imagePath%>" alt="<%=dto.getSong_title()%>" onerror="this.src='<%=request.getContextPath()%>/image/song/default-song.jpg'">
                                 </div>
                                 <div class="card-content">
                                     <h3 class="song-title"><%=dto.getSong_title()%></h3>
@@ -135,18 +139,16 @@ function goWrite(){
         </div>
         </div>
             <%}
-        } else { %>
-        <div class="content-list">
-            <p class="no-content">등록된 앨범이 없습니다.</p>
-        </div>
-        <%}%>
+        }%>
 
-        <!-- EP 섹션 -->
+        <!-- EP 섹션: 데이터 있을 때만 표시 -->
+        <%
+        if(epSongs != null && !epSongs.isEmpty()) {
+        %>
         <div class="content-title">
             <h2>EP</h2>
         </div>
         <%
-        if(epSongs != null && !epSongs.isEmpty()) {
             String currentEP = "";
             for(SongDto dto : epSongs) {
                 if(!currentEP.equals(dto.getAlbum_title())) {
@@ -183,14 +185,14 @@ function goWrite(){
                 }
                 String imagePath = "";
                 if(dto.getSong_cover_image() != null && !dto.getSong_cover_image().trim().isEmpty()) {
-                    imagePath = request.getContextPath() + "/images/song/" + dto.getSong_cover_image();
+                    imagePath = request.getContextPath() + "/image/song/" + dto.getSong_cover_image();
                 } else {
-                    imagePath = request.getContextPath() + "/images/default-song.jpg";
+                    imagePath = request.getContextPath() + "/image/song/default-song.jpg";
                 }
         %>
                             <a href="javascript:goSongView(<%=dto.getSong_id()%>)" class="music-card">
                                 <div class="card-image">
-                                    <img src="<%=imagePath%>" alt="<%=dto.getSong_title()%>" onerror="this.src='<%=request.getContextPath()%>/images/default-song.jpg'">
+                                    <img src="<%=imagePath%>" alt="<%=dto.getSong_title()%>" onerror="this.src='<%=request.getContextPath()%>/image/song/default-song.jpg'">
                                 </div>
                                 <div class="card-content">
                                     <h3 class="song-title"><%=dto.getSong_title()%></h3>
@@ -212,11 +214,7 @@ function goWrite(){
         </div>
         </div>
             <%}
-        } else { %>
-        <div class="content-list">
-            <p class="no-content">등록된 EP가 없습니다.</p>
-        </div>
-        <%}%>
+        }%>
 
         <!-- 싱글 섹션 -->
         <div class="content-title">
@@ -240,14 +238,14 @@ function goWrite(){
                                 for(SongDto dto : singleSongs) {
                                     String imagePath = "";
                                     if(dto.getSong_cover_image() != null && !dto.getSong_cover_image().trim().isEmpty()) {
-                                        imagePath = request.getContextPath() + "/images/song/" + dto.getSong_cover_image();
+                                        imagePath = request.getContextPath() + "/image/song/" + dto.getSong_cover_image();
                                     } else {
-                                        imagePath = request.getContextPath() + "/images/default-song.jpg";
+                                        imagePath = request.getContextPath() + "/image/song/default-song.jpg";
                                     }
                             %>
                             <a href="javascript:goSongView(<%=dto.getSong_id()%>)" class="music-card">
                                 <div class="card-image">
-                                    <img src="<%=imagePath%>" alt="<%=dto.getSong_title()%>" onerror="this.src='<%=request.getContextPath()%>/images/default-song.jpg'">
+                                    <img src="<%=imagePath%>" alt="<%=dto.getSong_title()%>" onerror="this.src='<%=request.getContextPath()%>/image/song/default-song.jpg'">
                                 </div>
                                 <div class="card-content">
                                     <h3 class="song-title"><%=dto.getSong_title()%></h3>
