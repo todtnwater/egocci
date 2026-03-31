@@ -17,17 +17,7 @@ public class DBConnection {
             dataSource = new BasicDataSource();
             dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
             // MySQL 8 최적화된 URL
-            dataSource.setUrl("jdbc:mysql://XXX.XXX.XXX.XXX/XXXX/egocci_music?" +
-                             "useSSL=false&serverTimezone=Asia/Seoul&" +
-                             "allowPublicKeyRetrieval=true&" +
-                             "useUnicode=true&characterEncoding=UTF-8&" +
-                             "autoReconnect=true&failOverReadOnly=false&" +
-                             "maxReconnects=3&initialTimeout=1&" +
-                             "connectTimeout=5000&socketTimeout=10000&" +
-                             "cachePrepStmts=true&useServerPrepStmts=true&" +
-                             "prepStmtCacheSize=250&prepStmtCacheSqlLimit=2048&" +
-                             "useLocalSessionState=true&elideSetAutoCommits=true&" +
-                             "rewriteBatchedStatements=true");
+            dataSource.setUrl("jdbc:mysql://XXX.XXX.XXX.XXX/XXXX/");
             dataSource.setUsername("XX");
             dataSource.setPassword("XXXX");
 
@@ -70,8 +60,7 @@ public class DBConnection {
     private static Connection getDirectConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String url = "jdbc:mysql://XXX.XXX.XXX.XXX/XXXX/egocci_music?" +
-                        "useSSL=false&serverTimezone=Asia/Seoul";
+            String url = "jdbc:mysql://XXX.XXX.XXX.XXX/XXXX/";
             return DriverManager.getConnection(url, "XX", "XXXX");
         } catch (Exception e) {
             System.err.println("직접 연결 실패: " + e.getMessage());
