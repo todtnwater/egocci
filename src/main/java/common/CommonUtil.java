@@ -17,10 +17,10 @@ import jakarta.servlet.http.HttpSession;
 public class CommonUtil {
 
 	// SFTP 서버 정보
-	private static final String SFTP_HOST = "221.145.43.81";
+	private static final String SFTP_HOST = "XXX.XXX.XXX.XXX";
 	private static final int SFTP_PORT = 22;
-	private static final String SFTP_USER = "ss";
-	private static final String SFTP_PASS = "10261026";
+	private static final String SFTP_USER = "XX";
+	private static final String SFTP_PASS = "XXXX";
 	private static final String SFTP_ROOM_PATH      = "/home/ss/upload/room/";
 	private static final String SFTP_NOTICE_PATH    = "/home/ss/upload/notice/";
 	private static final String SFTP_SONG_PATH      = "/home/ss/upload/song/";
