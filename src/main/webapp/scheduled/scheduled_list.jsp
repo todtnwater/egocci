@@ -61,18 +61,15 @@ function goDelete(id) {
         <%
         if (upcomingList != null && !upcomingList.isEmpty()) {
             for (ScheduledDto dto : upcomingList) {
-                String posterPath = "";
-                if (dto.getPoster_image() != null && !dto.getPoster_image().trim().isEmpty()) {
-                    posterPath = request.getContextPath() + "/image/scheduled/" + dto.getPoster_image();
-                } else {
-                    posterPath = request.getContextPath() + "/image/scheduled/default-poster.jpg";
-                }
+                String posterPath = (dto.getPoster_image() != null && !dto.getPoster_image().trim().isEmpty())
+                    ? request.getContextPath() + "/image/scheduled/" + dto.getPoster_image() : null;
         %>
         <div class="sc-card">
+            <%if(posterPath != null) {%>
             <div class="sc-card-poster">
-                <img src="<%=posterPath%>" alt="<%=dto.getTitle()%>"
-                     onerror="this.src='<%=request.getContextPath()%>/image/scheduled/default-poster.jpg'">
+                <img src="<%=posterPath%>" alt="<%=dto.getTitle()%>">
             </div>
+            <%}%>
             <div class="sc-card-info">
                 <h3 class="sc-title"><%=dto.getTitle()%></h3>
                 <p class="sc-date">
@@ -112,19 +109,16 @@ function goDelete(id) {
         </div>
         <%
             for (ScheduledDto dto : pastList) {
-                String posterPath = "";
-                if (dto.getPoster_image() != null && !dto.getPoster_image().trim().isEmpty()) {
-                    posterPath = request.getContextPath() + "/image/scheduled/" + dto.getPoster_image();
-                } else {
-                    posterPath = request.getContextPath() + "/image/scheduled/default-poster.jpg";
-                }
+                String posterPath = (dto.getPoster_image() != null && !dto.getPoster_image().trim().isEmpty())
+                    ? request.getContextPath() + "/image/scheduled/" + dto.getPoster_image() : null;
         %>
         <div class="sc-card sc-past-card">
+            <%if(posterPath != null) {%>
             <div class="sc-card-poster">
-                <img src="<%=posterPath%>" alt="<%=dto.getTitle()%>"
-                     onerror="this.src='<%=request.getContextPath()%>/image/scheduled/default-poster.jpg'">
-                <div class="sc-past-overlay">종료</div>
+                <img src="<%=posterPath%>" alt="<%=dto.getTitle()%>">
+                <span class="sc-past-badge">종료</span>
             </div>
+            <%}%>
             <div class="sc-card-info">
                 <h3 class="sc-title"><%=dto.getTitle()%></h3>
                 <p class="sc-date">
@@ -137,12 +131,15 @@ function goDelete(id) {
                 <%if (dto.getDescription() != null && !dto.getDescription().trim().isEmpty()) {%>
                 <p class="sc-desc"><%=dto.getDescription()%></p>
                 <%}%>
-                <%if ("top".equals(level)) {%>
                 <div class="sc-buttons">
+                    <%if (dto.getTicket_url() != null && !dto.getTicket_url().trim().isEmpty()) {%>
+                    <a href="<%=dto.getTicket_url()%>" target="_blank" class="btn-ticket">🎟 공연 정보</a>
+                    <%}%>
+                    <%if ("top".equals(level)) {%>
                     <a href="javascript:goUpdateForm(<%=dto.getPerformance_id()%>)" class="btn-warning">수정</a>
                     <a href="javascript:goDelete(<%=dto.getPerformance_id()%>)" class="btn-danger">삭제</a>
+                    <%}%>
                 </div>
-                <%}%>
             </div>
         </div>
         <%
