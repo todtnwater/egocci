@@ -72,7 +72,7 @@ public class DBConnection {
             Class.forName("com.mysql.cj.jdbc.Driver");
             String url = "jdbc:mysql://XXX.XXX.XXX.XXX/XXXX/egocci_music?" +
                         "useSSL=false&serverTimezone=Asia/Seoul";
-            return DriverManager.getConnection(url, "ss", "iotiot");
+            return DriverManager.getConnection(url, "XX", "XXXX");
         } catch (Exception e) {
             System.err.println("직접 연결 실패: " + e.getMessage());
             return null;
