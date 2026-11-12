@@ -1,0 +1,390 @@
+@charset "UTF-8";
+/* 곡 검색 박스 */
+.search-box {
+    display: flex;
+    align-items: center;
+    border: 2px solid #b30000;
+    border-radius: 12px;
+    padding: 10px 15px;
+    width: 500px;
+    margin: 20px auto;
+    background-color: #fff;
+}
+
+.search-input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 16px;
+    color: #333;
+}
+
+.icon-button {
+    background-color: transparent;
+    border: 1px solid #b30000;
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #b30000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-button:hover {
+    background-color: #e6f0ff;
+}
+
+/* 곡 리스트 컨테이너 */
+.content-title {
+    clear: both;
+    max-width: 80%;
+    margin: 50px auto;
+    width: 100%;
+    padding: 20px 20px;
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    text-align: center;
+}
+.content-title2 {
+    clear: both;
+    max-width: 15%;
+    margin: 50px auto;
+    width: 100%;
+    padding: 20px 20px;
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.content-list {
+    clear: both;
+    max-width: 80%;
+    margin: 50px auto;
+    width: 100%;
+    padding: 20px 20px;
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+}
+
+.content-album-title {
+    clear: both;
+    max-width: 80%;
+    margin: 50px auto;
+    width: 100%;
+    padding: 20px 20px;
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.no-content {
+    text-align: center;
+    color: white;
+}
+
+/* === 곡 상세보기 모달 스타일 === */
+
+/* 모달 배경 */
+.song-modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    justify-content: center;
+    align-items: center;
+}
+
+/* 모달 컨테이너 */
+.song-modal-content {
+    background: linear-gradient(135deg, #ff9312, #e67e00);
+    border-radius: 15px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* 모달 헤더 */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 30px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 15px 15px 0 0;
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: white;
+    font-size: 28px;
+    font-weight: 600;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.modal-close-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.modal-close-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+}
+
+/* 모달 바디 */
+.modal-body {
+    padding: 30px;
+}
+
+/* 곡 정보 영역 */
+.modal-song-info {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 30px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 25px;
+    backdrop-filter: blur(10px);
+}
+
+.modal-song-image {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.modal-song-image img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.title-track-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: linear-gradient(45deg, #dc3545, #c82333);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.modal-song-details {
+    flex: 1;
+    color: white;
+}
+
+.modal-song-details .detail-row {
+    display: flex;
+    margin-bottom: 12px;
+    align-items: center;
+}
+
+.modal-song-details .detail-label {
+    font-weight: 600;
+    min-width: 100px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.modal-song-details .detail-value {
+    font-size: 16px;
+    color: white;
+}
+
+/* 스트리밍 링크 섹션 */
+.streaming-section {
+    margin-bottom: 30px;
+}
+
+.streaming-section h4 {
+    color: white;
+    font-size: 20px;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.streaming-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.streaming-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 18px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.streaming-link:hover {
+    background: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    text-decoration: none;
+    color: #333;
+}
+
+/* 가사 섹션 */
+.lyrics-section {
+    margin-bottom: 30px;
+}
+
+.lyrics-section h4 {
+    color: white;
+    font-size: 20px;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.lyrics-content {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 25px;
+    border-radius: 12px;
+    line-height: 1.8;
+    font-size: 16px;
+    color: white;
+    white-space: pre-wrap;
+    max-height: 300px;
+    overflow-y: auto;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .song-modal-content {
+        width: 95%;
+        max-height: 90vh;
+    }
+    
+    .modal-header {
+        padding: 20px;
+    }
+    
+    .modal-header h2 {
+        font-size: 24px;
+    }
+    
+    .modal-body {
+        padding: 20px;
+    }
+    
+    .modal-song-info {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 20px;
+    }
+    
+    .modal-song-image img {
+        width: 180px;
+        height: 180px;
+    }
+    
+    .modal-song-details .detail-row {
+        justify-content: center;
+        text-align: center;
+    }
+    
+    .streaming-links {
+        justify-content: center;
+    }
+    
+    .streaming-link {
+        font-size: 14px;
+        padding: 10px 16px;
+    }
+    
+    .search-box {
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-header {
+        padding: 15px;
+    }
+    
+    .modal-header h2 {
+        font-size: 20px;
+    }
+    
+    .modal-body {
+        padding: 15px;
+    }
+    
+    .modal-song-image img {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .modal-song-details .detail-row {
+        flex-direction: column;
+        text-align: center;
+        margin-bottom: 8px;
+    }
+    
+    .streaming-link {
+        font-size: 13px;
+        padding: 8px 14px;
+    }
+    
+    .lyrics-content {
+        font-size: 14px;
+        padding: 20px;
+    }
+    
+    .search-box {
+        width: 95%;
+        padding: 8px 12px;
+    }
+}

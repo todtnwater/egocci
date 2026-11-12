@@ -1,0 +1,730 @@
+@charset "UTF-8";
+/* 기본 스타일 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #1a1a1a;
+    color: #fff;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* 헤더 */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(26, 26, 26, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    padding: 1rem 0;
+    border-bottom: 1px solid #333;
+}
+
+#m-title {
+    text-align: center;
+    font-family: 'Varsity Team', sans-serif;
+    font-size: 2.5rem;
+    color: #ff6b35;
+    text-shadow: 0 0 20px rgba(255, 107, 53, 0.5);
+    font-weight: bold;
+}
+
+/* 우측 연락처 메뉴 */
+.right-contact-menu {
+    position: fixed;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    z-index: 999;
+}
+
+.contact-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.contact-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 107, 53, 0.1);
+    border: 2px solid #ff6b35;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.contact-icon:hover {
+    background: #ff6b35;
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+}
+
+.contact-icon img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.contact-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* 이메일 패널 */
+.email-panel {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 400px;
+    height: 100vh;
+    background: rgba(34, 34, 34, 0.95);
+    backdrop-filter: blur(10px);
+    border-left: 2px solid #ff6b35;
+    transition: right 0.3s ease;
+    z-index: 1001;
+    overflow-y: auto;
+}
+
+.email-panel.active {
+    right: 0;
+}
+
+.panel-header {
+    background: #ff6b35;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 2rem;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+}
+
+.close-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.panel-profile-pic {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 1rem 0;
+    border: 3px solid #fff;
+}
+
+.email-address-box {
+    padding: 1rem 1.5rem;
+    text-align: center;
+}
+
+#email-address {
+    background: #333;
+    border: 1px solid #555;
+    color: #fff;
+    padding: 0.8rem;
+    border-radius: 5px;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+}
+
+#copy-msg {
+    color: #ff6b35;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.email-form {
+    padding: 0 1.5rem 1.5rem;
+}
+
+.email-form input,
+.email-form textarea {
+    width: 100%;
+    background: #333;
+    border: 1px solid #555;
+    color: #fff;
+    padding: 0.8rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    font-family: inherit;
+}
+
+.email-form input:focus,
+.email-form textarea:focus {
+    outline: none;
+    border-color: #ff6b35;
+    box-shadow: 0 0 10px rgba(255, 107, 53, 0.3);
+}
+
+.email-form textarea {
+    height: 120px;
+    resize: vertical;
+}
+
+.send-btn {
+    background: #ff6b35;
+    color: #fff;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.send-btn:hover {
+    background: #ff5722;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+}
+
+/* 컨테이너 */
+.container {
+    margin-top: 80px;
+    display: flex;
+    min-height: calc(100vh - 80px);
+}
+
+/* 왼쪽 메뉴 */
+.left-menu {
+    width: 250px;
+    background: rgba(34, 34, 34, 0.95);
+    backdrop-filter: blur(10px);
+    border-right: 1px solid #333;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.menu-toggle {
+    display: none;
+    padding: 1rem;
+    cursor: pointer;
+}
+
+.menu-icon {
+    font-size: 2rem;
+    color: #ff6b35;
+}
+
+.menu-content {
+    padding: 2rem 0;
+}
+
+.menu-content ul {
+    list-style: none;
+    padding: 0 1rem;
+    margin-bottom: 2rem;
+}
+
+.menu-content li {
+    margin-bottom: 0.5rem;
+}
+
+.menu-content a {
+    color: #ccc;
+    text-decoration: none;
+    padding: 1rem 1.5rem;
+    display: block;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    font-weight: 400;
+}
+
+.menu-content a:hover {
+    background: rgba(255, 107, 53, 0.1);
+    color: #ff6b35;
+    transform: translateX(5px);
+}
+
+#menu-down {
+    border-top: 1px solid #333;
+    padding-top: 1rem;
+}
+
+/* 메인 콘텐츠 */
+.content-row {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-content {
+    flex: 1;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* 검색박스 */
+.search-box {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background: rgba(34, 34, 34, 0.5);
+    border-radius: 15px;
+    border: 1px solid #333;
+}
+
+.search-select {
+    background: #333;
+    border: 1px solid #555;
+    color: #fff;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    font-family: inherit;
+    min-width: 120px;
+}
+
+.search-input {
+    flex: 1;
+    background: #333;
+    border: 1px solid #555;
+    color: #fff;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    font-family: inherit;
+}
+
+.search-input:focus,
+.search-select:focus {
+    outline: none;
+    border-color: #ff6b35;
+    box-shadow: 0 0 10px rgba(255, 107, 53, 0.3);
+}
+
+.icon-button {
+    background: #ff6b35;
+    border: none;
+    color: #fff;
+    padding: 0.8rem 1.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-button:hover {
+    background: #ff5722;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+}
+
+/* 콘텐츠 제목 */
+.content-title {
+    margin-bottom: 2rem;
+}
+
+.content-title h2 {
+    color: #ff6b35;
+    font-size: 2.5rem;
+    font-weight: 600;
+    text-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
+    margin-bottom: 0.5rem;
+}
+
+/* 콘텐츠 리스트 */
+.content-list {
+    margin-bottom: 4rem;
+}
+
+.content-album-title {
+    margin-bottom: 2rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid #333;
+}
+
+.content-album-title .info {
+    color: #ccc;
+    font-size: 1.1rem;
+    font-weight: 300;
+}
+
+/* 음악 슬라이더 */
+.music-slider-section {
+    position: relative;
+}
+
+.slider-container {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.cards-wrapper {
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.cards-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.cards-track {
+    display: flex;
+    gap: 2rem;
+    padding: 1rem 0;
+    min-width: max-content;
+}
+
+/* 음악 카드 */
+.music-card {
+    min-width: 220px;
+    max-width: 220px;
+    background: rgba(51, 51, 51, 0.8);
+    border-radius: 15px;
+    overflow: hidden;
+    text-decoration: none;
+    color: #fff;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+    backdrop-filter: blur(10px);
+}
+
+.music-card:hover {
+    transform: translateY(-10px);
+    border-color: #ff6b35;
+    box-shadow: 0 15px 40px rgba(255, 107, 53, 0.3);
+    background: rgba(51, 51, 51, 0.95);
+}
+
+.card-image {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    position: relative;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.music-card:hover .card-image img {
+    transform: scale(1.1);
+}
+
+.card-image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.7));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.music-card:hover .card-image::after {
+    opacity: 1;
+}
+
+.card-content {
+    padding: 1.5rem;
+    background: rgba(34, 34, 34, 0.9);
+}
+
+.song-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #fff;
+    transition: color 0.3s ease;
+}
+
+.music-card:hover .song-title {
+    color: #ff6b35;
+}
+
+/* 네비게이션 버튼 */
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 107, 53, 0.8);
+    border: none;
+    color: #fff;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-btn:hover {
+    background: #ff6b35;
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+}
+
+.nav-btn.prev {
+    left: -25px;
+}
+
+.nav-btn.next {
+    right: -25px;
+}
+
+/* 인디케이터 */
+.indicators {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.indicator.active {
+    background: #ff6b35;
+    transform: scale(1.2);
+}
+
+/* Song View Area */
+#song-view-area {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: rgba(34, 34, 34, 0.5);
+    border-radius: 15px;
+    border: 1px solid #333;
+    min-height: 200px;
+}
+
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    color: #ff6b35;
+    font-size: 1.2rem;
+}
+
+.error {
+    text-align: center;
+    color: #ff6b35;
+    font-size: 1.1rem;
+    padding: 2rem;
+}
+
+/* 푸터 */
+.footer {
+    background: #111;
+    border-top: 1px solid #333;
+    margin-top: auto;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2rem 2rem;
+}
+
+.address {
+    margin-bottom: 2rem;
+}
+
+.titlefooter {
+    font-family: 'Varsity Team', sans-serif;
+    font-size: 1.8rem;
+    color: #ff6b35;
+    margin-bottom: 1rem;
+}
+
+.address p {
+    color: #ccc;
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+}
+
+.copyright {
+    color: #666;
+    text-align: center;
+    font-size: 0.9rem;
+    padding-top: 2rem;
+    border-top: 1px solid #333;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .right-contact-menu {
+        display: none;
+    }
+    
+    .left-menu {
+        position: fixed;
+        left: -250px;
+        top: 80px;
+        height: calc(100vh - 80px);
+        z-index: 999;
+        transition: left 0.3s ease;
+    }
+    
+    .left-menu.menu-open {
+        left: 0;
+    }
+    
+    .menu-toggle {
+        display: block;
+    }
+    
+    .main-content {
+        padding: 1rem;
+        margin-left: 0;
+    }
+    
+    .search-box {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .search-select {
+        min-width: auto;
+    }
+    
+    .cards-track {
+        gap: 1rem;
+    }
+    
+    .music-card {
+        min-width: 180px;
+        max-width: 180px;
+    }
+    
+    .card-image {
+        height: 180px;
+    }
+    
+    .content-title h2 {
+        font-size: 2rem;
+    }
+    
+    #m-title {
+        font-size: 2rem;
+    }
+    
+    .nav-btn {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-content {
+        padding: 0.5rem;
+    }
+    
+    .music-card {
+        min-width: 160px;
+        max-width: 160px;
+    }
+    
+    .card-image {
+        height: 160px;
+    }
+    
+    .card-content {
+        padding: 1rem;
+    }
+    
+    .song-title {
+        font-size: 1rem;
+    }
+}
+
+/* 스크롤바 커스텀 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ff6b35;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ff5722;
+}
+
+/* 애니메이션 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.content-list {
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* 포커스 스타일 */
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 2px solid #ff6b35;
+    outline-offset: 2px;
+}
+
+/* 선택 스타일 */
+::selection {
+    background: rgba(255, 107, 53, 0.3);
+    color: #fff;
+}

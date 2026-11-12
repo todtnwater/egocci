@@ -1,0 +1,9 @@
+# build output
+build/
+
+# backups (contain old secrets)
+*.bak
+
+# secrets
+*.env
+*.properties.local

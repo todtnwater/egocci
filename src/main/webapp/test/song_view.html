@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KOKYOUNGBIN - Song View</title>
+    <link href="https://fonts.cdnfonts.com/css/varsity-team" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'VarsityTeam';
+            src: url('fonts/VarsityTeam-Bold.otf') format('truetype');
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ff9312;
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            position: relative;
+        }
+
+        /* 헤더 스타일 */
+        .header {
+            width: 100%;
+            text-align: center;
+            padding: 50px 0;
+            margin-left: 0;
+            background: linear-gradient(to bottom, #b30000, #ff9312);
+        }
+
+        #m-title {
+            font-family: 'Varsity Team', sans-serif;
+            font-size: 90px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: 2px;
+        }
+
+        /* Song View 전용 스타일 - 기존 오렌지 테마에 맞춤 */
+        .song-view-container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        .song-header {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            align-items: center;
+        }
+
+        .song-cover {
+            flex-shrink: 0;
+        }
+
+        .song-cover img {
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .song-info {
+            flex: 1;
+        }
+
+        .song-title {
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .song-artist {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .song-meta {
+            background: rgba(51, 51, 51, 0.6);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .meta-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .meta-item:last-child {
+            border-bottom: none;
+        }
+
+        .meta-label {
+            color: white;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .meta-value {
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 400;
+        }
+
+        .streaming-section {
+            margin: 3rem 0;
+        }
+
+        .section-title {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .streaming-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .stream-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            background: linear-gradient(45deg, #b30000, #ff9312);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(179, 0, 0, 0.3);
+        }
+
+        .stream-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(179, 0, 0, 0.5);
+            background: linear-gradient(45deg, #ff9312, #b30000);
+        }
+
+        .stream-link img {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+        }
+
+        .lyrics-section {
+            background: rgba(51, 51, 51, 0.6);
+            padding: 2.5rem;
+            border-radius: 15px;
+            margin: 3rem 0;
+        }
+
+        .lyrics-content {
+            line-height: 2;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+            white-space: pre-line;
+            font-weight: 300;
+            text-align: center;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 100px;
+            left: 20px;
+            background: rgba(179, 0, 0, 0.9);
+            border: none;
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 15px rgba(179, 0, 0, 0.4);
+        }
+
+        .back-button:hover {
+            background: #b30000;
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(179, 0, 0, 0.6);
+        }
+
+        /* Footer 스타일 */
+        .footer {
+            clear: both;
+            background: linear-gradient(to bottom, #ff9312, #42464d);
+            background-size: 100% 70px; 
+            background-repeat: no-repeat;
+            background-color: #42464d;
+            padding: 80px 20px 65px;
+            margin-top: auto;
+            width: 100%;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .footer .address {
+            font-style: normal;
+            color: #ababb1;
+            margin-bottom: 20px;
+        }
+
+        .footer .address .titlefooter {
+            font-size: 14px;
+            margin-bottom: 12px;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .footer .address p {
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .footer .copyright {
+            color: #fff;
+            font-size: 12px;
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .song-view-container {
+                padding: 1rem;
+                margin: 1rem;
+            }
+
+            .song-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .song-cover img {
+                width: 250px;
+                height: 250px;
+            }
+
+            .song-title {
+                font-size: 2rem;
+            }
+
+            .meta-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .streaming-links {
+                justify-content: center;
+            }
+
+            .back-button {
+                top: 90px;
+                left: 10px;
+                width: 45px;
+                height: 45px;
+            }
+
+            #m-title {
+                font-size: 60px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Back Button -->
+    <button class="back-button" onclick="history.back()">
+        <span class="material-icons">arrow_back</span>
+    </button>
+
+    <!-- Header -->
+    <header class="header">
+        <div id="m-title">KOKYOUNGBIN</div>
+    </header>
+
+    <div class="container">
+        <div class="song-view-container">
+            <!-- Song Header -->
+            <div class="song-header">
+                <div class="song-cover">
+                    <img src="https://via.placeholder.com/300x300/667eea/fff?text=잔야" alt="잔야" id="songCover">
+                </div>
+                <div class="song-info">
+                    <h1 class="song-title" id="songTitle">잔야</h1>
+                    <p class="song-artist" id="songArtist">고경빈 (KOKYOUNGBIN)</p>
+                    
+                    <div class="song-meta">
+                        <div class="meta-grid">
+                            <div class="meta-item">
+                                <span class="meta-label">앨범</span>
+                                <span class="meta-value" id="songAlbum">빈경보</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">발매일</span>
+                                <span class="meta-value" id="releaseDate">2024.03.15</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">장르</span>
+                                <span class="meta-value" id="songGenre">Indie Folk</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">타입</span>
+                                <span class="meta-value" id="songType">앨범</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Streaming Links -->
+            <div class="streaming-section">
+                <h3 class="section-title">스트리밍 플랫폼</h3>
+                <div class="streaming-links" id="streamingLinks">
+                    <a href="https://open.spotify.com/artist/0Tu6vmfKlkQB9kCyYNt79I" class="stream-link" target="_blank">
+                        <img src="https://via.placeholder.com/20x20/1db954/fff?text=S" alt="Spotify">
+                        Spotify
+                    </a>
+                    <a href="https://www.melon.com/artist/timeline.htm?artistId=2857454" class="stream-link" target="_blank">
+                        <img src="https://via.placeholder.com/20x20/00cd3c/fff?text=M" alt="Melon">
+                        Melon
+                    </a>
+                    <a href="https://music.apple.com/kr/artist/고경빈/1461067097" class="stream-link" target="_blank">
+                        <img src="https://via.placeholder.com/20x20/fc3c44/fff?text=A" alt="Apple Music">
+                        Apple Music
+                    </a>
+                    <a href="https://music.bugs.co.kr/artist/20102746?wl_ref=list_ar_02_search" class="stream-link" target="_blank">
+                        <img src="https://via.placeholder.com/20x20/f93/fff?text=B" alt="Bugs">
+                        Bugs
+                    </a>
+                    <a href="https://www.genie.co.kr/detail/artistInfo?xxnm=80805753" class="stream-link" target="_blank">
+                        <img src="https://via.placeholder.com/20x20/0084ff/fff?text=G" alt="Genie">
+                        Genie
+                    </a>
+                    <a href="https://soundcloud.com/egoccl" class="stream-link" target="_blank">
+                        <img src="https://via.placeholder.com/20x20/ff5500/fff?text=SC" alt="SoundCloud">
+                        SoundCloud
+                    </a>
+                </div>
+            </div>
+
+            <!-- Lyrics -->
+            <div class="lyrics-section">
+                <h3 class="section-title">가사</h3>
+                <div class="lyrics-content" id="lyricsContent">
+깊은 밤이 되면
+여전히 생각나네
+그때 우리가 함께했던
+모든 순간들이
+
+잔야 잔야
+그리운 밤이야
+잔야 잔야
+돌아가고 싶어
+
+시간은 흘러가도
+마음은 그대로야
+잔야의 기억 속에
+우리가 살고 있어
+
+잔야 잔야
+그리운 밤이야
+잔야 잔야
+돌아가고 싶어
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <address class="address">
+                <p class="titlefooter">KOKYOUNGBIN</p>
+                <p>04039 서울특별시 마포구 홍익로3길 20 | 20, Hongik-ro 3-gil, Mapo-gu, Seoul, Republic of Korea</p>
+                <p>KORANGEMGMT@GMAIL.COM</p>
+            </address>
+            <p class="copyright">Copyright &copy; egocci All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // URL 파라미터에서 곡 ID와 타입 가져오기
+        const urlParams = new URLSearchParams(window.location.search);
+        const songId = urlParams.get('id');
+        const songType = urlParams.get('type');
+
+        // 샘플 데이터 (실제로는 서버에서 받아올 데이터)
+        const songDatabase = {
+            '1': {
+                title: '잔야',
+                artist: '고경빈 (KOKYOUNGBIN)',
+                album: '빈경보',
+                releaseDate: '2024.03.15',
+                genre: 'Indie Folk',
+                type: '앨범',
+                cover: 'https://via.placeholder.com/300x300/667eea/fff?text=잔야',
+                lyrics: `깊은 밤이 되면
+여전히 생각나네
+그때 우리가 함께했던
+모든 순간들이
+
+잔야 잔야
+그리운 밤이야
+잔야 잔야
+돌아가고 싶어
+
+시간은 흘러가도
+마음은 그대로야
+잔야의 기억 속에
+우리가 살고 있어
+
+잔야 잔야
+그리운 밤이야
+잔야 잔야
+돌아가고 싶어`
+            },
+            '2': {
+                title: '섭섭한하루',
+                artist: '고경빈 (KOKYOUNGBIN)',
+                album: '빈경보',
+                releaseDate: '2024.03.15',
+                genre: 'Indie Pop',
+                type: '앨범',
+                cover: 'https://via.placeholder.com/300x300/667eea/fff?text=섭섭한하루',
+                lyrics: `오늘따라 유난히
+섭섭한 하루네
+아무 일도 없었는데
+왜 이럴까
+
+섭섭해 섭섭해
+이유 없이 섭섭해
+섭섭해 섭섭해
+그냥 그런 날이야
+
+때로는 그런 날이 있어
+특별한 이유 없이도
+마음이 허전하고
+뭔가 아쉬운 그런 날
+
+섭섭해 섭섭해
+이유 없이 섭섭해
+섭섭해 섭섭해
+그냥 그런 날이야`
+            },
+            '3': {
+                title: '일렁임',
+                artist: '고경빈 (KOKYOUNGBIN)',
+                album: '빈경보',
+                releaseDate: '2024.03.15',
+                genre: 'Indie Rock',
+                type: '앨범',
+                cover: 'https://via.placeholder.com/300x300/667eea/fff?text=일렁임',
+                lyrics: `물결처럼 일렁이는
+내 마음속 감정들
+잔잔하다가도
+때로는 거칠어져
+
+일렁임 일렁임
+끝없이 이어져
+일렁임 일렁임
+멈출 수가 없어
+
+바람이 불면
+더욱 크게 흔들려
+고요함 속에서도
+여전히 움직이고 있어`
+            },
+            '4': {
+                title: '제일좋아하긴해',
+                artist: '고경빈 (KOKYOUNGBIN)',
+                album: '빈경보',
+                releaseDate: '2024.03.15',
+                genre: 'Indie Pop',
+                type: '앨범',
+                cover: 'https://via.placeholder.com/300x300/667eea/fff?text=제일좋아하긴해',
+                lyrics: `솔직히 말하면
+제일 좋아하긴 해
+다른 누구보다도
+너를 좋아하긴 해
+
+제일좋아하긴해
+정말 좋아하긴 해
+제일좋아하긴해
+말로는 어려워도
+
+마음은 확실해
+너만 생각하고 있어
+제일좋아하긴해
+이 마음 변하지 않아`
+            }
+        };
+
+        // 페이지 로드시 곡 정보 표시
+        document.addEventListener('DOMContentLoaded', function() {
+            displaySongInfo(songId);
+        });
+
+        function displaySongInfo(id) {
+            const song = songDatabase[id];
+            
+            if (song) {
+                // 곡 정보 업데이트
+                document.getElementById('songTitle').textContent = song.title;
+                document.getElementById('songArtist').textContent = song.artist;
+                document.getElementById('songAlbum').textContent = song.album;
+                document.getElementById('releaseDate').textContent = song.releaseDate;
+                document.getElementById('songGenre').textContent = song.genre;
+                document.getElementById('songType').textContent = song.type;
+                document.getElementById('songCover').src = song.cover;
+                document.getElementById('songCover').alt = song.title;
+                document.getElementById('lyricsContent').textContent = song.lyrics;
+                
+                // 페이지 제목 업데이트
+                document.title = `KOKYOUNGBIN - ${song.title}`;
+            } else {
+                // 곡을 찾을 수 없는 경우
+                document.querySelector('.song-view-container').innerHTML = `
+                    <div style="text-align: center; padding: 4rem;">
+                        <h2 style="color: white; margin-bottom: 1rem;">곡을 찾을 수 없습니다</h2>
+                        <p style="color: rgba(255,255,255,0.8); margin-bottom: 2rem;">요청하신 곡 정보가 존재하지 않습니다.</p>
+                        <button onclick="history.back()" style="background: #b30000; color: white; border: none; padding: 1rem 2rem; border-radius: 25px; cursor: pointer;">
+                            돌아가기
+                        </button>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
